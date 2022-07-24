@@ -1,0 +1,24 @@
+---
+- name: Install nginx from the official repository
+  become: true
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+- name: Install git
+  become: true
+  ansible.builtin.apt:
+    name: git
+    state: present
+- name: Template a file to /etc/nginx/sites-enabled/default
+  become: true
+  ansible.builtin.template:
+    src: default.nginx
+    dest: /etc/nginx/sites-enabled/default
+    mode: 777
+- name: Get lighthouse
+  become: true
+  ansible.builtin.git:
+    repo: "https://github.com/VKCOM/lighthouse.git"
+    dest: /var/www/lighthouse
+  notify: restart nginx
+
