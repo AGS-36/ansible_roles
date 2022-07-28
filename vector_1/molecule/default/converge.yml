@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include vector_1"
+      include_role:
+        name: "vector_1"

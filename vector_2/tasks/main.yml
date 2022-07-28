@@ -1,0 +1,16 @@
+---
+- name: Get vector distrib
+  ansible.builtin.get_url:
+    url: "https://packages.timber.io/vector/0.23.0/vector_{{ vector_version }}_amd64.deb"
+    dest: "./vector_{{ vector_version }}_amd64.deb"
+    mode: 0755
+- name: Install vector packages
+  become: true
+  ansible.builtin.apt:
+    deb: https://packages.timber.io/vector/0.23.0/vector_{{ vector_version }}_amd64.deb
+- name: Template a file to /etc/vector/
+  become: true
+  ansible.builtin.template:
+    src: vector.toml
+    dest: /etc/vector/vector.toml
+    mode: '0644'
